@@ -3,16 +3,20 @@ service: app
 provider:
     name: aws
     region: us-east-1
+    environment: 
+        MONGODB_URI: ${ssm:/mongodb-demo/mongodb_uri}
 
 plugins:
     - ./vendor/bref/bref
+    - ./vendor/bref/extra-php-extensions
 
 functions:
     hello:
         handler: index.php
         description: ''
         runtime: php-81
-
+        layers:
+            - ${bref-extra:mongodb-php-81} 
 # Exclude files from deployment
 package:
     patterns:

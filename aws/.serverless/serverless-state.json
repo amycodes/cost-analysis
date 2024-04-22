@@ -7,6 +7,9 @@
     "provider": {
       "name": "aws",
       "region": "us-east-1",
+      "environment": {
+        "MONGODB_URI": "mongodb+srv://localuser_01:OyKbJFFSeGsQpHbI@demo-localdev.l5vs7jo.mongodb.net/?retryWrites=true&w=majority&appName=demo-localdev"
+      },
       "stage": "dev",
       "versionFunctions": true,
       "deploymentMethod": "direct",
@@ -174,13 +177,18 @@
                 "S3Bucket": {
                   "Ref": "ServerlessDeploymentBucket"
                 },
-                "S3Key": "serverless/app/dev/1713794454858-2024-04-22T14:00:54.858Z/app.zip"
+                "S3Key": "serverless/app/dev/1713796345509-2024-04-22T14:32:25.509Z/app.zip"
               },
               "Handler": "index.php",
               "Runtime": "provided.al2",
               "FunctionName": "app-dev-hello",
               "MemorySize": 1024,
               "Timeout": 6,
+              "Environment": {
+                "Variables": {
+                  "MONGODB_URI": "mongodb+srv://localuser_01:OyKbJFFSeGsQpHbI@demo-localdev.l5vs7jo.mongodb.net/?retryWrites=true&w=majority&appName=demo-localdev"
+                }
+              },
               "Role": {
                 "Fn::GetAtt": [
                   "IamRoleLambdaExecution",
@@ -188,21 +196,22 @@
                 ]
               },
               "Layers": [
-                "arn:aws:lambda:us-east-1:534081306603:layer:php-81:77"
+                "arn:aws:lambda:us-east-1:534081306603:layer:php-81:77",
+                "arn:aws:lambda:us-east-1:403367587399:layer:mongodb-php-81:15"
               ]
             },
             "DependsOn": [
               "HelloLogGroup"
             ]
           },
-          "HelloLambdaVersionsmPwgzfB8LyH5hvNGOQ1Ba4yT9D3PVqr98cN1DPclDU": {
+          "HelloLambdaVersionFIqBl4sEtzn3abEBjV1n0nCnAXWwY8nfyrb0ebECYg": {
             "Type": "AWS::Lambda::Version",
             "DeletionPolicy": "Retain",
             "Properties": {
               "FunctionName": {
                 "Ref": "HelloLambdaFunction"
               },
-              "CodeSha256": "psQoqP3OemIMdJwPPmK2FAPY+TEeK7XQiEXJVJVEu9I="
+              "CodeSha256": "S7JBFdk1hbPYnqB7s/nm2chG731HLzhhDUXWsRT2u4E="
             }
           }
         },
@@ -218,7 +227,7 @@
           "HelloLambdaFunctionQualifiedArn": {
             "Description": "Current Lambda function version",
             "Value": {
-              "Ref": "HelloLambdaVersionsmPwgzfB8LyH5hvNGOQ1Ba4yT9D3PVqr98cN1DPclDU"
+              "Ref": "HelloLambdaVersionFIqBl4sEtzn3abEBjV1n0nCnAXWwY8nfyrb0ebECYg"
             },
             "Export": {
               "Name": "sls-app-dev-HelloLambdaFunctionQualifiedArn"
@@ -311,7 +320,8 @@
       "vpc": {}
     },
     "plugins": [
-      "./vendor/bref/bref"
+      "./vendor/bref/bref",
+      "./vendor/bref/extra-php-extensions"
     ],
     "pluginsData": {},
     "functions": {
@@ -319,16 +329,16 @@
         "handler": "index.php",
         "description": "",
         "runtime": "provided.al2",
-        "events": [],
-        "name": "app-dev-hello",
         "layers": {
           "$ref": "$[\"service\"][\"provider\"][\"compiledCloudFormationTemplate\"][\"Resources\"][\"HelloLambdaFunction\"][\"Properties\"][\"Layers\"]"
         },
+        "events": [],
+        "name": "app-dev-hello",
         "package": {},
         "memory": 1024,
         "timeout": 6,
         "vpc": {},
-        "versionLogicalId": "HelloLambdaVersionsmPwgzfB8LyH5hvNGOQ1Ba4yT9D3PVqr98cN1DPclDU"
+        "versionLogicalId": "HelloLambdaVersionFIqBl4sEtzn3abEBjV1n0nCnAXWwY8nfyrb0ebECYg"
       }
     },
     "configValidationMode": "warn",
@@ -350,7 +360,7 @@
         ],
         "artifactsS3KeyDirname": "serverless/app/dev/code-artifacts",
         "artifact": "/home/anegrette/Projects/cost-analysis/aws/.serverless/app.zip",
-        "artifactDirectoryName": "serverless/app/dev/1713794454858-2024-04-22T14:00:54.858Z"
+        "artifactDirectoryName": "serverless/app/dev/1713796345509-2024-04-22T14:32:25.509Z"
       }
     },
     "layers": {},
@@ -358,7 +368,7 @@
     "artifact": "/home/anegrette/Projects/cost-analysis/aws/.serverless/app.zip"
   },
   "package": {
-    "artifactDirectoryName": "serverless/app/dev/1713794454858-2024-04-22T14:00:54.858Z",
+    "artifactDirectoryName": "serverless/app/dev/1713796345509-2024-04-22T14:32:25.509Z",
     "artifact": "app.zip"
   }
 }
