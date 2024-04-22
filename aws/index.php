@@ -10,8 +10,7 @@
     return function ($event) {
 
         $ce_client = new Aws\CostExplorer\CostExplorerClient([
-            'profile' => 'default',
-            'region' => 'us-west-2'
+            'region' => 'us-east-1'
         ]);
         $end = new DateTimeImmutable();
         $interval = new DateInterval('P1M');
