@@ -162,7 +162,7 @@
           "S3Bucket": {
             "Ref": "ServerlessDeploymentBucket"
           },
-          "S3Key": "serverless/app/dev/1713796345509-2024-04-22T14:32:25.509Z/app.zip"
+          "S3Key": "serverless/app/dev/1713798558166-2024-04-22T15:09:18.166Z/app.zip"
         },
         "Handler": "index.php",
         "Runtime": "provided.al2",
@@ -197,6 +197,43 @@
           "Ref": "HelloLambdaFunction"
         },
         "CodeSha256": "S7JBFdk1hbPYnqB7s/nm2chG731HLzhhDUXWsRT2u4E="
+      }
+    },
+    "HelloEventsRuleSchedule1": {
+      "Type": "AWS::Events::Rule",
+      "Properties": {
+        "ScheduleExpression": "cron(0 0 6 * ? *)",
+        "State": "ENABLED",
+        "Targets": [
+          {
+            "Arn": {
+              "Fn::GetAtt": [
+                "HelloLambdaFunction",
+                "Arn"
+              ]
+            },
+            "Id": "helloSchedule"
+          }
+        ]
+      }
+    },
+    "HelloLambdaPermissionEventsRuleSchedule1": {
+      "Type": "AWS::Lambda::Permission",
+      "Properties": {
+        "FunctionName": {
+          "Fn::GetAtt": [
+            "HelloLambdaFunction",
+            "Arn"
+          ]
+        },
+        "Action": "lambda:InvokeFunction",
+        "Principal": "events.amazonaws.com",
+        "SourceArn": {
+          "Fn::GetAtt": [
+            "HelloEventsRuleSchedule1",
+            "Arn"
+          ]
+        }
       }
     }
   },

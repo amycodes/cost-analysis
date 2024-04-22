@@ -17,6 +17,11 @@ functions:
         runtime: php-81
         layers:
             - ${bref-extra:mongodb-php-81} 
+        events:
+        - schedule:
+            rate: cron(0 0 6 * ? *)
+            enabled: true
+
 # Exclude files from deployment
 package:
     patterns:
